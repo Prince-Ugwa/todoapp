@@ -1,0 +1,72 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="CSS/style.css" />
+    <script defer src="script.js"></script>
+    <title>TodoList App | ASSIGNMENT</title>
+  </head>
+  <body>
+    <main class="container">
+      <div class="todo-main">
+        <div class="todo-container">
+          <div class="todo-head">
+            <!-- <div class="todo-img">
+              <img src="img/BRAWNY.png-1.jpg" alt="img" />
+            </div> -->
+            <div class="todo-head-tag">
+              <h4>Todo List App</h4>
+              <div class="new-todo">
+                <form id="todo-form">
+                  <input
+                    type="text"
+                    name="newtodo"
+                    id="todo-input"
+                    placeholder="enter your task Todos"
+                  />
+                  <button type="submit" class="add-todo-btn">
+                    <i class="fa-solid fa-plus todo-add-icon"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="todo-body">
+            <div class="todo-items" data-list="">
+              <!-- <div class="todo-check-text" id="0">
+                <i class="fa-regular fa-circle"></i>
+                <i class="fa-solid fa-circle-check"></i>
+
+                <p class="todo-text">Todo checked</p>
+              </div>
+              <div class="delete-todo">
+                <i class="fa-solid fa-trash-can"></i>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="todo-footer">
+          <button class="clear-all-todo">Clear All</button>
+        </div>
+      </div>
+      <div class="todo-timeframe-addbtn">
+        <div class="timedate">
+          <p class="todo-day-date"></p>
+          <p class="month-year">
+            <span class="todo-month"></span> <span class="todo-year"> </span>
+          </p>
+          <p class="todo-day"></p>
+        </div>
+      </div>
+      <div class="todo-bg-wrap"></div>
+    </main>
+  </body>
+</html>
