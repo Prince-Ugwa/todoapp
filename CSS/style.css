@@ -196,3 +196,15 @@ img {
   width: 100%;
   padding: 15px;
 }
+
+@media screen and (max-width: 419px) {
+  .todo-container {
+    width: 250px;
+  }
+  .todo-container ::after {
+    width: 270px;
+  }
+  .delete-todo {
+    margin-top: -28px;
+  }
+}
