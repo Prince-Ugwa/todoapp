@@ -30,6 +30,18 @@ img {
 .todo-container {
   width: 500px;
   height: 400px;
+  position: relative;
+}
+.todo-container ::after {
+  position: absolute;
+  left: 0;
+  top: -20px;
+  content: "";
+  height: 520px;
+  width: 520px;
+  background-color: #ffffff;
+  z-index: -10;
+  border-radius: 10px;
 }
 .todo-head {
   display: flex;
@@ -99,7 +111,6 @@ img {
 }
 .todo-check-text ::first-letter {
   text-transform: uppercase;
-  font-weight: 700;
 }
 
 .todo-text {
@@ -122,7 +133,7 @@ img {
 .delete-todo {
   font-size: 18px;
   color: rgb(81, 81, 81);
-  margin-right: 10px;
+  margin-right: 8px;
   margin-top: -15px;
   float: right;
 }
@@ -184,14 +195,4 @@ img {
   border-top: 2px solid rgba(94, 197, 118, 0.3);
   width: 100%;
   padding: 15px;
-}
-.todo-bg-wrap {
-  background-color: #ffffff;
-  width: 520px;
-  height: 500px;
-  position: absolute;
-  /* left: 0; */
-  transform: translate(-5rem, 0rem);
-  z-index: -10;
-  border-radius: 10px;
 }
