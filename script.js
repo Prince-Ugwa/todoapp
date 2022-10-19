@@ -83,8 +83,8 @@ const AppTodo = class {
     //RENDER TODO ELEMENT
     todoArr.forEach((todo, index) => {
       todoItems.innerHTML += `
-      <div class="todo-list" id= ${index}>   
-                <i class="fa-regular ${
+      <div class="todo-list" id= ${index}>  
+                <i class="fa-solid ${
                   todo.checked ? "fa-circle-check" : "fa-circle"
                 }" data-clicked="check"
                 ></i>
@@ -104,13 +104,13 @@ const AppTodo = class {
     const todoListId = +parentEl.id;
     ///////todo-list buttonclicked
     const clickEl = target.dataset.clicked;
-    // console.log(todoListId, clickEl);
-    clickEl === "clicked" && crossTodo(todoListId);
+    console.log(todoListId, clickEl);
+    clickEl === "clicked" && slectTodo(todoId);
   }
-  crossTodo(todoListId) {
+  slectTodo(todoId) {
     let todoArr = todoArr.map((todo, index) => ({
       ...todo,
-      checked: index === todoListId ? !todo.checked : todo.checked,
+      checked: index === todoId ? !todo.checked : todo.checked,
     }));
     this.renderTodos();
   }
