@@ -65,33 +65,24 @@ img {
   font-size: 20px;
   font-weight: 700;
 }
-.new-todo {
-  display: inline-block;
-  width: 100%;
-}
-#todo-form {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-#todo-form input {
-  flex: 1;
-  padding: 5px;
-  outline: none;
-  border: none;
+.todo-head-tag p {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.6);
 }
 .add-todo-btn {
-  margin-right: 15px;
   border: none;
   background-image: linear-gradient(to top left, #39b385, #9be15d);
   padding: 6px 7px;
   border-radius: 50%;
+  height: 62px;
+  width: 62px;
+  transition: 0.3s ease;
 }
 .add-todo-btn:hover {
-  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.3);
 }
 .todo-add-icon {
-  font-size: 20px;
+  font-size: 36px;
   font-weight: 700;
   color: #fff;
 }
@@ -102,24 +93,24 @@ img {
   height: auto;
 }
 
-.todo-check-text {
+.todo-list {
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 90%;
   margin-bottom: 10px;
 }
-.todo-check-text ::first-letter {
+.todo-list ::first-letter {
   text-transform: uppercase;
 }
 
 .todo-text {
-  font-size: 16px;
+  flex: 1;
+  font-size: 18px;
   float: right;
   margin-top: 2px;
 }
-.todo-check-text i {
-  font-size: 12px;
+.todo-list i {
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -130,12 +121,12 @@ img {
 .delete-todo {
   cursor: pointer;
 }
-.delete-todo {
-  font-size: 18px;
-  color: rgb(81, 81, 81);
-  margin-right: 8px;
-  margin-top: -15px;
-  float: right;
+.delete-todo.delete-todo {
+  font-size: 16px;
+  margin-right: 10px;
+}
+.fa-circle-check {
+  color: #ffb003;
 }
 
 /* RMEOVE TODO */
@@ -158,7 +149,8 @@ img {
 .todo-timeframe-addbtn {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  flex-direction: column;
   background-image: linear-gradient(to top right, #ffb003, #ffd42a);
   height: 280px;
   width: 120px;
@@ -197,14 +189,40 @@ img {
   padding: 15px;
 }
 
-@media screen and (max-width: 419px) {
+@media screen and (max-width: 358px) {
+  .container {
+    flex-direction: column-reverse;
+  }
   .todo-container {
     width: 250px;
+    height: 300px;
   }
   .todo-container ::after {
-    width: 270px;
+    width: 100%;
+    height: 340px;
+    top: -20px;
+    z-index: -100000;
   }
   .delete-todo {
     margin-top: -28px;
+  }
+  .todo-main {
+    box-shadow: 0px -29px 27px -28px rgb(85, 85, 85, 0.4);
+  }
+  .todo-timeframe-addbtn {
+    height: 80px;
+    width: 180px;
+    padding: 30px 10px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    position: relative;
+  }
+  .todo-day-date {
+    font-size: 24px;
+    position: absolute;
+    bottom: 2px;
+  }
+  .todo-day {
+    font-size: 16px;
   }
 }

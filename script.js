@@ -2,7 +2,6 @@
 "use strict";
 
 const addTodo = document.querySelector(".add-todo-btn");
-const newTodoInput = document.querySelector("#todo-input");
 const deleteTodo = document.querySelector(".delete-todo");
 const clearAllTodo = document.querySelector(".clear-all-todo");
 const todoItems = document.querySelector(".todo-items");
@@ -10,18 +9,16 @@ const todoDayDate = document.querySelector(".todo-day-date");
 const todoMonth = document.querySelector(".todo-month");
 const todoYear = document.querySelector(".todo-year");
 const todoDay = document.querySelector(".todo-day");
-const form = document.querySelector("#todo-form");
 
 let todoArr = [];
-
 const AppTodo = class {
   constructor() {
     // EVENT LISTENER WITH BIND TO HANDLE THIS.
     addTodo.addEventListener("click", this.submitTodo.bind(this));
     todoItems.addEventListener("click", this.clickedTodo.bind(this));
-    this.setDate();
+    this.#setDate();
   }
-  setDate() {
+  #setDate() {
     const month = [
       "Jan.",
       "Feb",
@@ -55,31 +52,27 @@ const AppTodo = class {
   submitTodo(e) {
     e.preventDefault();
     // console.log("clicked");
-    this.storeTodo();
+    this._storeTodo();
     this.renderTodos();
   }
-  // HANDLE EVENT ON TODO ELEMENT
-  clickedTodo(e) {
-    const target = e.target;
-    const parentEl = target.parentNode;
-    console.log(parentEl);
-  }
-  storeTodo() {
-    const todoVal = newTodoInput.value;
+
+  _storeTodo() {
+    // const todoVal = newTodoInput.value;
+
+    const todoVal = prompt("Enter your todo");
 
     // CHECK IF TODO IS EMPTY
-    const todovalIsEmpty = todoVal === "";
+    const emptyTodo = todoVal === "";
 
     ////
-    if (todovalIsEmpty) {
-      alert("Please enter Todo");
+    if (emptyTodo) {
+      alert("Please enter a valid Todo");
     } else {
       const todo = {
         value: todoVal,
         checked: false,
       };
       todoArr.push(todo);
-      newTodoInput.value = "";
       // console.log(todoArr);
     }
   }
@@ -90,19 +83,36 @@ const AppTodo = class {
     //RENDER TODO ELEMENT
     todoArr.forEach((todo, index) => {
       todoItems.innerHTML += `
-      <div class="todo-check-text" id= ${index}>
-                 
-                <i class="fa-solid ${
+      <div class="todo-list" id= ${index}>   
+                <i class="fa-regular ${
                   todo.checked ? "fa-circle-check" : "fa-circle"
-                }"
+                }" data-clicked="check"
                 ></i>
-                <p class="todo-text"> ${todo.value}</p>
-              </div>
-              <div class="delete-todo">
-                <i class="fa-solid fa-trash-can"></i>
-              </div>
+                <p class="todo-text" data-clicked="check"> ${todo.value}</p>
+                <i class="fa-solid fa-trash-can delete-todo" data-clicked="remove"></i>
+              </div>  
       `;
     });
+  }
+  // HANDLE EVENT ON TODO ELEMENT
+  clickedTodo(e) {
+    const target = e.target;
+    const parentEl = target.parentNode;
+    if (parentEl.className !== "todo-list") return;
+
+    //////todolist id
+    const todoListId = +parentEl.id;
+    ///////todo-list buttonclicked
+    const clickEl = target.dataset.clicked;
+    // console.log(todoListId, clickEl);
+    clickEl === "clicked" && crossTodo(todoListId);
+  }
+  crossTodo(todoListId) {
+    let todoArr = todoArr.map((todo, index) => ({
+      ...todo,
+      checked: index === todoListId ? !todo.checked : todo.checked,
+    }));
+    this.renderTodos();
   }
 };
 
