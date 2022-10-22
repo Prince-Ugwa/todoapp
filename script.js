@@ -9,13 +9,16 @@ const todoDayDate = document.querySelector(".todo-day-date");
 const todoMonth = document.querySelector(".todo-month");
 const todoYear = document.querySelector(".todo-year");
 const todoDay = document.querySelector(".todo-day");
+const todoList = document.querySelectorAll(".todo-list");
 
 let todoArr = [];
+
 const AppTodo = class {
   constructor() {
     // EVENT LISTENER WITH BIND TO HANDLE THIS.
-    addTodo.addEventListener("click", this.submitTodo.bind(this));
+    addTodo.addEventListener("click", this.newTodo.bind(this));
     todoItems.addEventListener("click", this.clickedTodo.bind(this));
+    clearAllTodo.addEventListener("click", this.clearAll.bind(this));
     this.#setDate();
   }
   #setDate() {
@@ -49,27 +52,24 @@ const AppTodo = class {
     todoYear.textContent = `${now.getFullYear()}`;
     todoDay.textContent = `${days[now.getDay()]}`;
   }
-  submitTodo(e) {
+  newTodo(e) {
     e.preventDefault();
     // console.log("clicked");
     this._storeTodo();
     this.renderTodos();
+    this.setLocalStorage(todoArr);
+    todoItems.classList.remove("remove-todo");
+    return;
   }
 
   _storeTodo() {
-    // const todoVal = newTodoInput.value;
-
-    const todoVal = prompt("Enter your todo");
-
-    // CHECK IF TODO IS EMPTY
-    const emptyTodo = todoVal === "";
-
-    ////
-    if (emptyTodo) {
+    // const todoItem = newTodoInput.value;
+    const todoItem = prompt("Enter your todo");
+    if (todoItem === "") {
       alert("Please enter a valid Todo");
     } else {
       const todo = {
-        value: todoVal,
+        value: todoItem,
         checked: false,
       };
       todoArr.push(todo);
@@ -77,41 +77,62 @@ const AppTodo = class {
     }
   }
   renderTodos() {
-    // CLEAR TODO BEFORE A ANOTHER INPUT
-    todoItems.innerHTML = "";
+    todoItems.innerHTML = ""; //clear todo b4 another input
 
     //RENDER TODO ELEMENT
     todoArr.forEach((todo, index) => {
       todoItems.innerHTML += `
       <div class="todo-list" id= ${index}>  
-                <i class="fa-solid ${
-                  todo.checked ? "fa-circle-check" : "fa-circle"
-                }" data-clicked="check"
-                ></i>
-                <p class="todo-text" data-clicked="check"> ${todo.value}</p>
-                <i class="fa-solid fa-trash-can delete-todo" data-clicked="remove"></i>
-              </div>  
-      `;
+        <i class="bi ${
+          todo.checked ? "bi-check-circle-fill" : "bi-circle"
+        }" data-action="check"></i>
+        <p class=" ${
+          todo.checked ? "todo-checked" : ""
+        }" data-action="check"> ${todo.value}</p>
+        <i class="bi bi-trash-fill" data-action="remove"></i>
+     </div>  
+     `;
     });
+  }
+
+  setLocalStorage(arr) {
+    localStorage.setItem("todoArr", JSON.stringify(arr));
+  }
+  getLocalStorage() {
+    const todos = JSON.parse(localStorage.getItem(todoArr));
   }
   // HANDLE EVENT ON TODO ELEMENT
   clickedTodo(e) {
     const target = e.target;
-    const parentEl = target.parentNode;
+    // console.log(target);
+    const parentEl = target.parentElement;
+
+    ///guard clause
     if (parentEl.className !== "todo-list") return;
 
-    //////todolist id
-    const todoListId = +parentEl.id;
-    ///////todo-list buttonclicked
-    const clickEl = target.dataset.clicked;
-    console.log(todoListId, clickEl);
-    clickEl === "clicked" && slectTodo(todoId);
+    const todoId = +parentEl.id;
+    const action = target.dataset.action;
+    action === "check" && this.checkTodo(todoId);
+    action === "remove" && this.removeTodo(todoId);
   }
-  slectTodo(todoId) {
-    let todoArr = todoArr.map((todo, index) => ({
+  checkTodo(todoId) {
+    todoArr = todoArr.map((todo, index) => ({
       ...todo,
       checked: index === todoId ? !todo.checked : todo.checked,
     }));
+    this.renderTodos();
+    localStorage.setItem("todoArr", JSON.stringify(todoArr));
+  }
+  removeTodo(todoId) {
+    const newArr = todoArr.filter((todo, index) => index !== todoId);
+    todoArr = newArr;
+    this.renderTodos();
+    localStorage.setItem("todoArr", JSON.stringify(todoArr));
+  }
+  clearAll(e) {
+    e.preventDefault;
+    const target = e.target;
+    todoArr = [];
     this.renderTodos();
   }
 };

@@ -31,6 +31,7 @@ img {
   width: 500px;
   height: 400px;
   position: relative;
+  /* z-index: -1; */
 }
 .todo-container ::after {
   position: absolute;
@@ -40,7 +41,7 @@ img {
   height: 520px;
   width: 520px;
   background-color: #ffffff;
-  z-index: -10;
+  z-index: -20;
   border-radius: 10px;
 }
 .todo-head {
@@ -69,20 +70,12 @@ img {
   font-size: 16px;
   color: rgba(0, 0, 0, 0.6);
 }
-.add-todo-btn {
-  border: none;
-  background-image: linear-gradient(to top left, #39b385, #9be15d);
-  padding: 6px 7px;
-  border-radius: 50%;
-  height: 62px;
-  width: 62px;
-  transition: 0.3s ease;
-}
+
 .add-todo-btn:hover {
   box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.3);
 }
 .todo-add-icon {
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 700;
   color: #fff;
 }
@@ -90,50 +83,46 @@ img {
 /* TODO BODY */
 .todo-body {
   padding: 15px 15px 0 15px;
-  height: auto;
+  height: 324px;
+  overflow-y: scroll;
 }
 
 .todo-list {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .todo-list ::first-letter {
   text-transform: uppercase;
 }
 
-.todo-text {
+.todo-list p {
   flex: 1;
   font-size: 18px;
   float: right;
-  margin-top: 2px;
 }
 .todo-list i {
-  font-size: 14px;
+  font-size: 18px;
   cursor: pointer;
 }
 
 .todo-checked {
   text-decoration: line-through;
+  color: rgb(96, 95, 95);
 }
 .select-todo-item,
 .delete-todo {
   cursor: pointer;
 }
-.delete-todo.delete-todo {
-  font-size: 16px;
+.bi-trash {
   margin-right: 10px;
+  margin-top: 5px;
 }
-.fa-circle-check {
+.bi-check-circle-fill {
   color: #ffb003;
 }
 
-/* RMEOVE TODO */
-
-.remove-todo {
-  display: none;
-}
 .clear-all-todo {
   display: block;
   padding: 10px 32px;
@@ -157,6 +146,8 @@ img {
   padding: 30px 10px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  /* animation: slidesX 2500ms ease; */
+  /* z-index: -1; */
 }
 .todo-day-date {
   font-size: 62px;
@@ -180,6 +171,17 @@ img {
 }
 .todo-day {
   font-size: 18px;
+}
+.add-todo-btn {
+  border: none;
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+  padding: 6px 7px;
+  border-radius: 50%;
+  height: 62px;
+  width: 62px;
+  transition: 0.3s ease;
+  cursor: pointer;
+  /* position: absolute; */
 }
 
 .todo-footer {
@@ -224,5 +226,14 @@ img {
   }
   .todo-day {
     font-size: 16px;
+  }
+}
+
+@keyframes slidesX {
+  0% {
+    transform: translateX(-140px);
+  }
+  100% {
+    transform: translateX(20px);
   }
 }
