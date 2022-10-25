@@ -19,9 +19,9 @@ const AppTodo = class {
     addTodo.addEventListener("click", this.newTodo.bind(this));
     todoItems.addEventListener("click", this.clickedTodo.bind(this));
     clearAllTodo.addEventListener("click", this.clearAll.bind(this));
-    this.#setDate();
+    this._setDate();
   }
-  #setDate() {
+  _setDate() {
     const month = [
       "Jan.",
       "Feb",
@@ -57,7 +57,7 @@ const AppTodo = class {
     // console.log("clicked");
     this._storeTodo();
     this.renderTodos();
-    this.setLocalStorage(todoArr);
+    this._setLocalStorage(todoArr);
     todoItems.classList.remove("remove-todo");
     return;
   }
@@ -65,7 +65,7 @@ const AppTodo = class {
   _storeTodo() {
     // const todoItem = newTodoInput.value;
     const todoItem = prompt("Enter your todo");
-    if (todoItem === "") {
+    if (todoItem.length === 0) {
       alert("Please enter a valid Todo");
     } else {
       const todo = {
@@ -95,7 +95,7 @@ const AppTodo = class {
     });
   }
 
-  setLocalStorage(arr) {
+  _setLocalStorage(arr) {
     localStorage.setItem("todoArr", JSON.stringify(arr));
   }
   getLocalStorage() {
@@ -131,10 +131,10 @@ const AppTodo = class {
   }
   clearAll(e) {
     e.preventDefault;
-    const target = e.target;
     todoArr = [];
     this.renderTodos();
   }
 };
 
-const testApp = new AppTodo();
+const app = new AppTodo();
+// app._setDate();
