@@ -60,6 +60,7 @@ const AppTodo = class {
     this._storeTodo();
     this.renderTodos();
     this._setLocalStorage(this.#todoArr);
+    console.log(this);
     return;
   }
 
@@ -76,7 +77,6 @@ const AppTodo = class {
         checked: false,
       };
       this.#todoArr.push(todo);
-      console.log(this);
     }
   }
   renderTodos() {
