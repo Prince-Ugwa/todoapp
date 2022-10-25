@@ -11,12 +11,14 @@ const todoYear = document.querySelector(".todo-year");
 const todoDay = document.querySelector(".todo-day");
 const todoList = document.querySelectorAll(".todo-list");
 
-let todoArr = [];
+// let todoArr = [];
 
 const AppTodo = class {
+  #todoArr = [];
+  #todoItem;
   constructor() {
     // EVENT LISTENER WITH BIND TO HANDLE THIS.
-    addTodo.addEventListener("click", this.newTodo.bind(this));
+    addTodo.addEventListener("click", this._newTodo.bind(this));
     todoItems.addEventListener("click", this.clickedTodo.bind(this));
     clearAllTodo.addEventListener("click", this.clearAll.bind(this));
     this._setDate();
@@ -52,35 +54,36 @@ const AppTodo = class {
     todoYear.textContent = `${now.getFullYear()}`;
     todoDay.textContent = `${days[now.getDay()]}`;
   }
-  newTodo(e) {
+  _newTodo(e) {
     e.preventDefault();
     // console.log("clicked");
     this._storeTodo();
     this.renderTodos();
-    this._setLocalStorage(todoArr);
-    todoItems.classList.remove("remove-todo");
+    this._setLocalStorage(this.#todoArr);
     return;
   }
 
   _storeTodo() {
-    // const todoItem = newTodoInput.value;
-    const todoItem = prompt("Enter your todo");
-    if (todoItem.length === 0) {
+    this.#todoItem = prompt("Enter your todo");
+    if (
+      this.#todoItem.trim().length === 0 ||
+      this.#todoItem.trim().value === ""
+    ) {
       alert("Please enter a valid Todo");
     } else {
       const todo = {
-        value: todoItem,
+        value: this.#todoItem,
         checked: false,
       };
-      todoArr.push(todo);
-      // console.log(todoArr);
+      this.#todoArr.push(todo);
+      console.log(this);
     }
   }
   renderTodos() {
     todoItems.innerHTML = ""; //clear todo b4 another input
 
     //RENDER TODO ELEMENT
-    todoArr.forEach((todo, index) => {
+    this.#todoArr.forEach((todo, index) => {
       todoItems.innerHTML += `
       <div class="todo-list" id= ${index}>  
         <i class="bi ${
@@ -109,29 +112,26 @@ const AppTodo = class {
 
     ///guard clause
     if (parentEl.className !== "todo-list") return;
-
     const todoId = +parentEl.id;
     const action = target.dataset.action;
     action === "check" && this.checkTodo(todoId);
     action === "remove" && this.removeTodo(todoId);
   }
   checkTodo(todoId) {
-    todoArr = todoArr.map((todo, index) => ({
+    this.#todoArr = this.#todoArr.map((todo, index) => ({
       ...todo,
       checked: index === todoId ? !todo.checked : todo.checked,
     }));
     this.renderTodos();
-    localStorage.setItem("todoArr", JSON.stringify(todoArr));
   }
   removeTodo(todoId) {
-    const newArr = todoArr.filter((todo, index) => index !== todoId);
-    todoArr = newArr;
+    const newArr = this.#todoArr.filter((todo, index) => index !== todoId);
+    this.#todoArr = newArr;
     this.renderTodos();
-    localStorage.setItem("todoArr", JSON.stringify(todoArr));
   }
   clearAll(e) {
     e.preventDefault;
-    todoArr = [];
+    this.#todoArr = [];
     this.renderTodos();
   }
 };
