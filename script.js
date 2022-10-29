@@ -17,6 +17,7 @@ const AppTodo = class {
   #todoArr = [];
   #todoItem;
   constructor() {
+    this._getLocalStorage();
     // EVENT LISTENER WITH BIND TO HANDLE THIS.
     addTodo.addEventListener("click", this._newTodo.bind(this));
     todoItems.addEventListener("click", this.clickedTodo.bind(this));
@@ -24,29 +25,10 @@ const AppTodo = class {
     this._setDate();
   }
   _setDate() {
-    const month = [
-      "Jan.",
-      "Feb",
-      "Mar",
-      "April",
-      "may",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
+    // prettier-ignore
+    const month = ["Jan.", "Feb", "Mar", "April", "may", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec",];
+    // prettier-ignore
+    const days = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday",];
 
     const now = new Date();
     todoDayDate.textContent = `${now.getDate()}`;
@@ -58,8 +40,8 @@ const AppTodo = class {
     e.preventDefault();
     // console.log("clicked");
     this._storeTodo();
-    this.renderTodos();
-    this._setLocalStorage(this.#todoArr);
+    this._renderTodos();
+    this._setLocalStorage();
     console.log(this);
     return;
   }
@@ -79,7 +61,7 @@ const AppTodo = class {
       this.#todoArr.push(todo);
     }
   }
-  renderTodos() {
+  _renderTodos() {
     todoItems.innerHTML = ""; //clear todo b4 another input
 
     //RENDER TODO ELEMENT
@@ -98,11 +80,17 @@ const AppTodo = class {
     });
   }
 
-  _setLocalStorage(arr) {
-    localStorage.setItem("todoArr", JSON.stringify(arr));
+  _setLocalStorage() {
+    localStorage.setItem("todoArr", JSON.stringify(this.#todoArr));
   }
-  getLocalStorage() {
-    const todos = JSON.parse(localStorage.getItem(todoArr));
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem("todoArr"));
+    console.log(data);
+    if (!data) return;
+    this.#todoArr = data;
+    this.#todoArr.forEach((todo) => {
+      this._renderTodos(todo);
+    });
   }
   // HANDLE EVENT ON TODO ELEMENT
   clickedTodo(e) {
@@ -127,12 +115,13 @@ const AppTodo = class {
   removeTodo(todoId) {
     const newArr = this.#todoArr.filter((todo, index) => index !== todoId);
     this.#todoArr = newArr;
-    this.renderTodos();
+    this._renderTodos();
   }
   clearAll(e) {
     e.preventDefault;
     this.#todoArr = [];
-    this.renderTodos();
+    localStorage.removeItem("todoArr");
+    this._renderTodos();
   }
 };
 
