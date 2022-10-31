@@ -48,10 +48,9 @@ const AppTodo = class {
 
   _storeTodo() {
     this.#todoItem = prompt("Enter your todo");
-    if (
-      this.#todoItem.trim().length === 0 ||
-      this.#todoItem.trim().value === ""
-    ) {
+    // const todoitemCheck = this.#todoItem.value;
+    // console.log(todoitemCheck);
+    if (!this.#todoItem) {
       alert("Please enter a valid Todo");
     } else {
       const todo = {
@@ -110,7 +109,7 @@ const AppTodo = class {
       ...todo,
       checked: index === todoId ? !todo.checked : todo.checked,
     }));
-    this.renderTodos();
+    this._renderTodos();
   }
   removeTodo(todoId) {
     const newArr = this.#todoArr.filter((todo, index) => index !== todoId);
